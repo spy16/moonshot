@@ -9,22 +9,26 @@ A boilerplate Go library for quickly setting up your next moonshot idea!
     * Moonshot will take care of loading configs from environment/files. 
     * File can be overriden by `--config` flag also.
     * You can run `./myapp configs` to see the actual loaded configs.
+
 * 🌍 HTTP Server setup
     * HTTP server is pre-configured with graceful shutdown enabled.
     * Server is pre-configured with handlers for `/health`, NotFound, MethodNotAllowed.
     * Panic recovery is enabled.
     * You can set the `Routes` field in `moonshot.App` to add custom routes or override.
+
+* 🗃️ Static File Server
+   * Pass `--staic-dir` & `--static-route` flags to serve static files on the HTTP server.
+   * This can be used to serve front-end app or static assets for your frontend. 
+
+* 🗒️ Logging
+   * `log` package is automatically configured based on `--log-level` and `--log-format` flags.
+   * Pass log-context using `log.Inject(ctx, fields)`
+
 * ❌ Errors package
     * An easy-to-use errors package with common category of errors pre-defined.
     * Just do `errors.ErrInvalid.WithMsgf()` or `WithCausef()` to add additional context.
-* 🗒️ Logging
-    * `log` package is automatically configured based on `--log-level` and `--log-format` flags.
-    * Pass log-context using `log.Inject(ctx, fields)` 
-* 🗃️ Static File Server
-    * Pass `--staic-dir` & `--static-route` flags to serve static files on the HTTP server.
-    * This can be used to serve front-end app or static assets for your frontend. 
 
-> **Note**: Refer `./_example` for a demo application.
+> Refer `./_example` for a demo application.
 
 ## Usage
 
@@ -64,7 +68,6 @@ A boilerplate Go library for quickly setting up your next moonshot idea!
    myapp [command]
    
    Available Commands:
-   completion  Generate the autocompletion script for the specified shell
    configs     Show currently loaded configurations
    help        Help about any command
    serve       Start HTTP server.
@@ -77,5 +80,3 @@ A boilerplate Go library for quickly setting up your next moonshot idea!
    ```
 
 * You can run `./myapp serve --addr="localhost:8080"` for starting server.
-* You can pass `--static-dir` and `--static-route` flags to `serve` command for serving static files.
-
