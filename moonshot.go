@@ -18,18 +18,21 @@ type App struct {
 	Routes func(r *chi.Mux)
 }
 
-func (cli *App) Launch(ctx context.Context, cmds ...*cobra.Command) int {
+func (app *App) Launch(ctx context.Context, cmds ...*cobra.Command) int {
 	root := &cobra.Command{
-		Use:   fmt.Sprintf("%s <command> [flags] <args>", cli.Name),
-		Short: cli.Short,
-		Long:  cli.Long,
+		Use:   fmt.Sprintf("%s <command> [flags] <args>", app.Name),
+		Short: app.Short,
+		Long:  app.Long,
+		CompletionOptions: cobra.CompletionOptions{
+			DisableDefaultCmd: true,
+		},
 	}
 	root.PersistentFlags().StringP("config", "c", "", "Config file path override")
 
 	root.AddCommand(cmds...)
 	root.AddCommand(
-		cli.cmdServe(ctx),
-		cli.cmdShowConfigs(ctx),
+		app.cmdServe(ctx),
+		app.cmdShowConfigs(ctx),
 	)
 
 	if err := root.Execute(); err != nil {
