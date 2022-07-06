@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/spf13/cobra"
+	"github.com/spy16/moonshot/log"
 )
 
 // App represents an instance of app command. Invoke App.Launch()
@@ -27,7 +28,17 @@ func (app *App) Launch(ctx context.Context, cmds ...*cobra.Command) int {
 			DisableDefaultCmd: true,
 		},
 	}
-	root.PersistentFlags().StringP("config", "c", "", "Config file path override")
+
+	flags := root.PersistentFlags()
+
+	var logLevel, logFormat string
+	flags.StringP("config", "c", "", "Config file path override")
+	flags.StringVar(&logLevel, "log-level", "info", "Log level")
+	flags.StringVar(&logFormat, "log-format", "text", "Log format (json/text)")
+
+	root.PersistentPreRun = func(cmd *cobra.Command, args []string) {
+		log.Setup(logLevel, logFormat)
+	}
 
 	root.AddCommand(cmds...)
 	root.AddCommand(

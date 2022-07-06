@@ -10,7 +10,7 @@ var lg = logrus.New()
 
 // Setup configures the global logger instance with level and
 // formatter.
-func Setup(format, level string) {
+func Setup(level, format string) {
 	lvl, err := logrus.ParseLevel(level)
 	if err != nil {
 		lvl = logrus.WarnLevel
