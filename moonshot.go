@@ -3,6 +3,7 @@ package moonshot
 import (
 	"context"
 	"fmt"
+	"io/fs"
 
 	"github.com/go-chi/chi"
 	"github.com/spf13/cobra"
@@ -12,11 +13,12 @@ import (
 // App represents an instance of app command. Invoke App.Launch()
 // in `main()`.
 type App struct {
-	Name   string
-	Short  string
-	Long   string
-	CfgPtr interface{}
-	Routes func(r *chi.Mux)
+	Name     string
+	Short    string
+	Long     string
+	CfgPtr   interface{}
+	Routes   func(r *chi.Mux)
+	StaticFS fs.FS
 }
 
 func (app *App) Launch(ctx context.Context, cmds ...*cobra.Command) int {
