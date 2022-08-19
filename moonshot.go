@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/spf13/cobra"
+
 	"github.com/spy16/moonshot/log"
 )
 
@@ -17,7 +18,7 @@ type App struct {
 	Short    string
 	Long     string
 	CfgPtr   interface{}
-	Routes   func(r *chi.Mux)
+	Routes   func(r *chi.Mux) error
 	StaticFS fs.FS
 }
 

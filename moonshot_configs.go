@@ -13,22 +13,22 @@ import (
 	"github.com/spy16/moonshot/log"
 )
 
-func (cli *App) cmdShowConfigs(ctx context.Context) *cobra.Command {
+func (app *App) cmdShowConfigs(ctx context.Context) *cobra.Command {
 	var format string
 	cmd := &cobra.Command{
 		Use:   "configs",
 		Short: "Show currently loaded configurations",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := cli.loadConfigs(cmd); err != nil {
+			if err := app.loadConfigs(cmd); err != nil {
 				log.Fatalf(ctx, "failed to load configurations: %v", err)
 			}
 
 			var err error
 			if format == "json" {
-				err = json.NewEncoder(os.Stdout).Encode(cli.CfgPtr)
+				err = json.NewEncoder(os.Stdout).Encode(app.CfgPtr)
 			} else {
 				enc := yaml.NewEncoder(os.Stdout)
-				err = enc.Encode(cli.CfgPtr)
+				err = enc.Encode(app.CfgPtr)
 			}
 
 			if err != nil {
@@ -41,9 +41,9 @@ func (cli *App) cmdShowConfigs(ctx context.Context) *cobra.Command {
 	return cmd
 }
 
-func (cli *App) loadConfigs(cmd *cobra.Command) error {
+func (app *App) loadConfigs(cmd *cobra.Command) error {
 	opts := []config.Option{
-		config.WithName(strings.ToLower(cli.Name)),
+		config.WithName(strings.ToLower(app.Name)),
 		config.WithEnv(""),
 	}
 
@@ -52,7 +52,7 @@ func (cli *App) loadConfigs(cmd *cobra.Command) error {
 		opts = append(opts, config.WithFile(cfgFile))
 	}
 
-	if err := config.Load(cli.CfgPtr, opts...); err != nil {
+	if err := config.Load(app.CfgPtr, opts...); err != nil {
 		return err
 	}
 

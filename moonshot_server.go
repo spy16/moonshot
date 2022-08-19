@@ -20,14 +20,14 @@ import (
 	"github.com/spy16/moonshot/log"
 )
 
-func (cli *App) cmdServe(ctx context.Context) *cobra.Command {
+func (app *App) cmdServe(ctx context.Context) *cobra.Command {
 	var graceDur time.Duration
 	var addr, staticDir, staticRoute string
 	cmd := &cobra.Command{
 		Use:   "serve",
 		Short: "Start HTTP server.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := cli.loadConfigs(cmd); err != nil {
+			if err := app.loadConfigs(cmd); err != nil {
 				log.Fatalf(ctx, "failed to load configs: %v", err)
 				return
 			}
@@ -38,10 +38,13 @@ func (cli *App) cmdServe(ctx context.Context) *cobra.Command {
 			router.Get("/health", pingHandler(map[string]interface{}{
 				"status": "ok",
 			}))
-			cli.Routes(router)
 
-			if cli.StaticFS != nil {
-				router.Mount(staticRoute, staticHandler(cli.StaticFS))
+			if err := app.Routes(router); err != nil {
+				log.Fatalf(ctx, "route setup failed: %v", err)
+			}
+
+			if app.StaticFS != nil {
+				router.Mount(staticRoute, staticHandler(app.StaticFS))
 			} else if staticDir != "" {
 				router.Mount(staticRoute, http.StripPrefix(staticRoute, http.FileServer(http.Dir(staticDir))))
 			}
