@@ -41,6 +41,9 @@ func (app *App) Launch(ctx context.Context, cmds ...*cobra.Command) int {
 
 	root.PersistentPreRun = func(cmd *cobra.Command, args []string) {
 		log.Setup(logLevel, logFormat)
+		if err := app.loadConfigs(cmd); err != nil {
+			log.Fatalf(ctx, "failed to load configs: %v", err)
+		}
 	}
 
 	root.AddCommand(cmds...)

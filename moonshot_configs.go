@@ -6,10 +6,12 @@ import (
 	"os"
 	"strings"
 
+	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 
 	"github.com/spy16/moonshot/config"
+	"github.com/spy16/moonshot/errors"
 	"github.com/spy16/moonshot/log"
 )
 
@@ -23,12 +25,18 @@ func (app *App) cmdShowConfigs(ctx context.Context) *cobra.Command {
 				log.Fatalf(ctx, "failed to load configurations: %v", err)
 			}
 
+			m := map[string]interface{}{}
+			if err := mapstructure.Decode(app.CfgPtr, &m); err != nil {
+				log.Fatalf(ctx, "failed to unmarshal configs: %v", err)
+			}
+
 			var err error
 			if format == "json" {
-				err = json.NewEncoder(os.Stdout).Encode(app.CfgPtr)
+				err = json.NewEncoder(os.Stdout).Encode(m)
+			} else if format == "yaml" || format == "yml" {
+				err = yaml.NewEncoder(os.Stdout).Encode(m)
 			} else {
-				enc := yaml.NewEncoder(os.Stdout)
-				err = enc.Encode(app.CfgPtr)
+				err = errors.New("unknown format")
 			}
 
 			if err != nil {
