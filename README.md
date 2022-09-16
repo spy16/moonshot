@@ -1,5 +1,7 @@
 # 🌔 Moonshot 
 
+**NOTICE**: I wanted to grow this project to a customisable Firebase/Supabase alternative. But I think the https://pocketbase.io/ nailed it!. So I would highly recommend trying that out.
+
 A boilerplate Go library for quickly setting up your next moonshot idea!
 
 ## Features
