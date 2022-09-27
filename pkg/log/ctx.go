@@ -10,8 +10,8 @@ type ctxKey string
 
 var fieldsKey = ctxKey("fields")
 
-// InjectFields returns a new context with fields injected.
-func InjectFields(ctx context.Context, fields logrus.Fields) context.Context {
+// Inject returns a new context with fields injected.
+func Inject(ctx context.Context, fields logrus.Fields) context.Context {
 	return context.WithValue(ctx, fieldsKey, fields)
 }
 

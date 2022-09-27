@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/spy16/moonshot/errors"
+	"github.com/spy16/moonshot/pkg/errors"
 )
 
 func TestError_Error(t *testing.T) {

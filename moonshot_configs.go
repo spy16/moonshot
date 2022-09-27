@@ -10,9 +10,9 @@ import (
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 
-	"github.com/spy16/moonshot/config"
-	"github.com/spy16/moonshot/errors"
-	"github.com/spy16/moonshot/log"
+	"github.com/spy16/moonshot/pkg/config"
+	"github.com/spy16/moonshot/pkg/errors"
+	"github.com/spy16/moonshot/pkg/log"
 )
 
 func (app *App) cmdShowConfigs(ctx context.Context) *cobra.Command {

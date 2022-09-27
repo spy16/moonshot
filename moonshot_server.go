@@ -15,9 +15,9 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/spf13/cobra"
 
-	"github.com/spy16/moonshot/errors"
-	"github.com/spy16/moonshot/httputils"
-	"github.com/spy16/moonshot/log"
+	"github.com/spy16/moonshot/pkg/errors"
+	"github.com/spy16/moonshot/pkg/httputils"
+	"github.com/spy16/moonshot/pkg/log"
 )
 
 func (app *App) cmdServe(ctx context.Context) *cobra.Command {

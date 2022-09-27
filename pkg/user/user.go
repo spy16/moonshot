@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/spy16/moonshot/errors"
+	"github.com/spy16/moonshot/pkg/errors"
 )
 
 // User represents a registered user in moonshot.

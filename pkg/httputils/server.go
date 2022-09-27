@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/spy16/moonshot/errors"
-	"github.com/spy16/moonshot/log"
+	"github.com/spy16/moonshot/pkg/errors"
+	"github.com/spy16/moonshot/pkg/log"
 )
 
 // Respond writes an HTTP response to the client.

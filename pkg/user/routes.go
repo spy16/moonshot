@@ -7,9 +7,9 @@ import (
 	"github.com/go-chi/chi"
 	"golang.org/x/oauth2"
 
-	"github.com/spy16/moonshot/errors"
-	"github.com/spy16/moonshot/httputils"
-	"github.com/spy16/moonshot/log"
+	"github.com/spy16/moonshot/pkg/errors"
+	"github.com/spy16/moonshot/pkg/httputils"
+	"github.com/spy16/moonshot/pkg/log"
 )
 
 // Routes installs the user-management routes to the given router.

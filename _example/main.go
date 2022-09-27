@@ -10,7 +10,7 @@ import (
 	"github.com/go-chi/chi"
 
 	"github.com/spy16/moonshot"
-	"github.com/spy16/moonshot/httputils"
+	"github.com/spy16/moonshot/pkg/httputils"
 )
 
 var appCfg struct {
@@ -27,11 +27,13 @@ func main() {
 		Name:   "moonshot-demo",
 		Short:  "A sample moonshot app setup",
 		CfgPtr: &appCfg,
-		Routes: func(r *chi.Mux) {
+		Routes: func(r *chi.Mux) error {
 			// set up any custom routes here.
 			r.Get("/hello", func(wr http.ResponseWriter, req *http.Request) {
 				httputils.Respond(wr, req, http.StatusOK, "Hello!")
 			})
+
+			return nil
 		},
 	}
 
