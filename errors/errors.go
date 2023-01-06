@@ -8,6 +8,7 @@ import (
 
 // Common timer domain errors. Use `ErrX.WithCausef()` to clone and add context.
 var (
+	ErrAuth        = Error{Code: "unauthenticated", Message: "You are not authorized"}
 	ErrInvalid     = Error{Code: "bad_request", Message: "Request is not valid"}
 	ErrNotFound    = Error{Code: "not_found", Message: "Requested entity not found"}
 	ErrConflict    = Error{Code: "conflict", Message: "An entity with conflicting identifier exists"}

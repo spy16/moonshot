@@ -16,8 +16,8 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/spy16/moonshot/errors"
-	"github.com/spy16/moonshot/httputils"
 	"github.com/spy16/moonshot/log"
+	"github.com/spy16/moonshot/utils"
 )
 
 func (app *App) cmdServe(ctx context.Context) *cobra.Command {
@@ -50,7 +50,7 @@ func (app *App) cmdServe(ctx context.Context) *cobra.Command {
 			}
 
 			log.Infof(ctx, "starting server at '%s'...", addr)
-			if err := httputils.GracefulServe(ctx, graceDur, addr, router); err != nil {
+			if err := utils.GracefulServe(ctx, graceDur, addr, router); err != nil {
 				log.Fatalf(ctx, "server exited with error: %v", err)
 			}
 		},
@@ -65,21 +65,21 @@ func (app *App) cmdServe(ctx context.Context) *cobra.Command {
 
 func methodNotAllowedHandler() http.HandlerFunc {
 	return func(wr http.ResponseWriter, req *http.Request) {
-		httputils.Respond(wr, req, http.StatusMethodNotAllowed,
+		utils.Respond(wr, req, http.StatusMethodNotAllowed,
 			errors.ErrInvalid.WithMsgf("%s not allowed for %s", req.Method, req.URL.Path))
 	}
 }
 
 func notFoundHandler() http.HandlerFunc {
 	return func(wr http.ResponseWriter, req *http.Request) {
-		httputils.Respond(wr, req, http.StatusNotFound,
+		utils.Respond(wr, req, http.StatusNotFound,
 			errors.ErrNotFound.WithMsgf("endpoint '%s %s' not found", req.Method, req.URL.Path))
 	}
 }
 
 func pingHandler(info map[string]interface{}) http.HandlerFunc {
 	return func(wr http.ResponseWriter, req *http.Request) {
-		httputils.Respond(wr, req, http.StatusOK, info)
+		utils.Respond(wr, req, http.StatusOK, info)
 	}
 }
 
